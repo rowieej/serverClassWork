@@ -5,21 +5,34 @@
 var http = require('http');
 var PORT1 = 7000;
 var PORT2 = 7500;
+var goodComments = ["alright!", "hi five!", "pound it!"];
+var badComments = ["are you serious", "i can't deal with you", "you suck"];
 
-function handleRequest(request, response){
-  response.end('It Works!! Path Hit: ' + request.url);
+for (i=0; i < goodComments.length + 1 ; i++ ){
+
 }
 
-var serverOne = http.createServer(handleRequest);
-var serverTwo = http.createServer(handleRequest);
+//need two different functions to handle requests, one for each server
+function handleRequestOne(request, response){
+  response.end("You're cool!");
+}
 
-serverTwo.listen(PORT2, function(){
-  console.log("Why did you do that?  That's bad! You're bad")
-});
+function handleRequestTwo(request, response){
+  response.end("you smell bad");
+}
+
+var serverOne = http.createServer(handleRequestOne);
+var serverTwo = http.createServer(handleRequestTwo);
+
 
 serverOne.listen(PORT1, function(){
-  console.log("Way to be! You're awesome!")
+  console.log("server listening on: http://localhost:&s", PORT1)
 });
+
+serverTwo.listen(PORT2, function(){
+  console.log("server listening on: http://localhost:&s", PORT2)
+});
+
 
 // * The one listening on 7500 will always tell the user something bad about themselves.
 // * Make sure you create a Github repo and commit this code!
